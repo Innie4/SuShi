@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuShi - Food Delivery App</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'sushi-green': {
+                            100: '#e6f7e6',
+                            200: '#c2eac2',
+                            300: '#9ddc9d',
+                            400: '#79cf79',
+                            500: '#54c154',
+                            600: '#43a843',
+                            700: '#328f32',
+                            800: '#217621',
+                            900: '#105d10',
+                        },
+                        'sushi-dark-green': '#0e4e0e',
+                        'sushi-light-green': '#54c154',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'xl': '1rem',
+                        '2xl': '1.5rem',
+                        '3xl': '2rem',
+                        '4xl': '3rem',
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #0e4e0e 0%, #217621 100%);
+            border-radius: 0 0 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(84, 193, 84, 0.2);
+            top: -100px;
+            right: -100px;
+            z-index: 0;
+        }
+        
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(84, 193, 84, 0.15);
+            bottom: 50px;
+            left: -50px;
+            z-index: 0;
+        }
+        
+        .promo-section {
+            background: linear-gradient(135deg, #217621 0%, #328f32 100%);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .promo-section::before {
+            content: '';
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: rgba(84, 193, 84, 0.2);
+            top: -100px;
+            right: -50px;
+            z-index: 0;
+        }
+        
+        .phone-mockup {
+            filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.15));
+            transition: transform 0.3s ease;
+        }
+        
+        .phone-mockup:hover {
+            transform: translateY(-10px);
+        }
+        
+        .food-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .food-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .download-btn {
+            transition: transform 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .star-rating {
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Header Section -->
+    <header class="hero-bg w-full min-h-screen relative">
+        <div class="container mx-auto px-4 py-6">
+            <!-- Navigation -->
+            <nav class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <img src="https://placehold.co/40x40/54c154/FFFFFF.png?text=S" alt="SuShi Logo" class="w-10 h-10 rounded-full">
+                    <span class="text-white font-semibold ml-2 text-xl">Su <span class="bg-white text-sushi-green-600 px-1 rounded-md">Shi</span></span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-white font-medium">Home</a>
+                    <a href="#" class="text-white opacity-80 hover:opacity-100 transition-opacity">About Us</a>
+                    <a href="#" class="text-white opacity-80 hover:opacity-100 transition-opacity">Foods</a>
+                    <a href="#" class="text-white opacity-80 hover:opacity-100 transition-opacity">Get App</a>
+                </div>
+                
+                <button class="bg-white text-sushi-green-700 px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors">Register</button>
+                
+                <!-- Mobile Menu Button (Hidden on Desktop) -->
+                <button class="md:hidden text-white" id="mobile-menu-button">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </nav>
+            
+            <!-- Mobile Menu (Hidden by Default) -->
+            <div class="md:hidden hidden bg-white absolute top-20 left-0 right-0 z-50 shadow-lg rounded-b-lg" id="mobile-menu">
+                <div class="flex flex-col p-4 space-y-4">
+                    <a href="#" class="text-sushi-green-700 font-medium">Home</a>
+                    <a href="#" class="text-gray-700 hover:text-sushi-green-700 transition-colors">About Us</a>
+                    <a href="#" class="text-gray-700 hover:text-sushi-green-700 transition-colors">Foods</a>
+                    <a href="#" class="text-gray-700 hover:text-sushi-green-700 transition-colors">Get App</a>
+                </div>
+            </div>
+            
+            <!-- Hero Content -->
+            <div class="flex flex-col md:flex-row items-center mt-12 md:mt-20 relative z-10">
+                <div class="md:w-1/2 text-white">
+                    <div class="inline-block bg-sushi-light-green bg-opacity-20 px-3 py-1 rounded-full text-sm mb-4">
+                        <span class="text-yellow-300">★</span> Hello, Foody!
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Delicious Food For Your Life</h1>
+                    <p class="text-gray-200 mb-8 max-w-lg">
+                        For many, food is an experience. It is both a shared and an art. It is meant to be savored and enjoyed. In a culture with such passion for food, it is no surprise that we take talking about it, while the Chinese share their love of food, they also have a love of language.
+                    </p>
+                    <button class="download-btn bg-white text-sushi-green-700 px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors flex items-center">
+                        <i class="fas fa-download mr-2"></i> Download App
+                    </button>
+                </div>
+                
+                <!-- App Mockups -->
+                <div class="md:w-1/2 mt-12 md:mt-0 relative">
+                    <!-- First Phone Mockup -->
+                    <div class="phone-mockup absolute md:left-0 left-10 top-0 z-10 transform -rotate-6">
+                        <img src="https://placehold.co/280x560/FFFFFF/CCCCCC.png?text=SuShi+App" alt="SuShi App" class="w-64 md:w-72 rounded-3xl border-8 border-white shadow-lg">
+                    </div>
+                    
+                    <!-- Second Phone Mockup -->
+                    <div class="phone-mockup absolute md:right-0 right-10 top-10 z-20 transform rotate-6">
+                        <img src="https://placehold.co/280x560/54c154/FFFFFF.png?text=Food+App" alt="SuShi App" class="w-64 md:w-72 rounded-3xl border-8 border-white shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Curved Bottom -->
+        <div class="absolute bottom-0 left-0 right-0 h-16 bg-white rounded-tl-4xl"></div>
+    </header>
+
+    <!-- Best Quality Food Section -->
+    <section class="py-20 px-4">
+        <div class="container mx-auto">
+            <!-- Section Header -->
+            <div class="flex items-center mb-6">
+                <div class="w-6 h-0.5 bg-sushi-green-500 mr-2"></div>
+                <span class="text-sushi-green-500 font-medium">About Us</span>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center">
+                <!-- Left Side - Phone Mockup -->
+                <div class="md:w-1/2 mb-10 md:mb-0 relative">
+                    <div class="bg-sushi-dark-green rounded-3xl p-4 inline-block transform rotate-3 shadow-xl">
+                        <img src="https://placehold.co/280x560/FFFFFF/CCCCCC.png?text=Food+Menu" alt="SuShi App Menu" class="w-64 md:w-72 rounded-2xl">
+                    </div>
+                    
+                    <!-- Green Circle Background -->
+                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-sushi-green-200 rounded-full opacity-20 z-0"></div>
+                </div>
+                
+                <!-- Right Side - Content -->
+                <div class="md:w-1/2 md:pl-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">The best quality food for your Health</h2>
+                    <p class="text-gray-600 mb-8">
+                        New Year is over. Month ago, is your New Year's resolution to eat healthy on a rocky terrain now? Then you've got to do more than just steal away from the fried chicken your colleague just ordered.
+                    </p>
+                    
+                    <!-- Food Categories -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Sushi & Wasabi -->
+                        <div class="food-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <img src="https://placehold.co/300x200/111111/CCCCCC.png?text=Sushi" alt="Sushi & Wasabi" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-semibold">Sushi & Wasabi</h3>
+                                <p class="text-xs text-gray-500">Japanese Food</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Big Burgers -->
+                        <div class="food-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <img src="https://placehold.co/300x200/111111/CCCCCC.png?text=Burger" alt="Big Burgers" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-semibold">Big Burgers</h3>
+                                <p class="text-xs text-gray-500">American Food</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Salmon -->
+                        <div class="food-card bg-white rounded-xl overflow-hidden shadow-md">
+                            <img src="https://placehold.co/300x200/111111/CCCCCC.png?text=Salmon" alt="Salmon" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-semibold">Salmon</h3>
+                                <p class="text-xs text-gray-500">Seafood</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promotional Section -->
+    <section class="py-16 px-4">
+        <div class="container mx-auto">
+            <div class="promo-section p-10 md:p-16 text-center text-white relative z-10">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Get up to 50% off when making transaction on our app</h2>
+                <p class="mb-8 max-w-2xl mx-auto">Only available on the ios platform for app or download</p>
+                
+                <!-- App Mockups in Background -->
+                <div class="absolute opacity-20 -bottom-10 left-1/2 transform -translate-x-1/2 w-full">
+                    <img src="https://placehold.co/600x300/FFFFFF/FFFFFF.png?text=App+Screens" alt="App Screens" class="w-full max-w-3xl mx-auto">
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6 relative z-10">
+                    <button class="download-btn bg-white text-sushi-green-700 px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors flex items-center">
+                        <i class="fas fa-download mr-2"></i> Download App
+                    </button>
+                    <a href="#" class="text-white underline hover:text-gray-200 transition-colors">Demo android app?</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="py-20 px-4">
+        <div class="container mx-auto">
+            <!-- Section Header -->
+            <div class="flex items-center mb-10">
+                <div class="w-6 h-0.5 bg-sushi-green-500 mr-2"></div>
+                <span class="text-sushi-green-500 font-medium">What they say?</span>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center">
+                <!-- Left Side - Testimonial -->
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-10">Look, what do they recommend for you?</h2>
+                    
+                    <div class="flex items-start">
+                        <img src="https://placehold.co/80x80/FFCC00/FFFFFF.png?text=J" alt="Jonathan" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <p class="text-gray-700 mb-4">
+                                This is the most delicious food I have ever eaten, and uses healthy. They really care about it.
+                                I highly recommend you folks to try this once.
+                            </p>
+                            <p class="font-semibold">Jonathan S</p>
+                            
+                            <!-- Dots Navigation -->
+                            <div class="flex mt-6 space-x-2">
+                                <div class="w-8 h-2 bg-sushi-green-500 rounded-full"></div>
+                                <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Side - Food Image -->
+                <div class="md:w-1/2 md:pl-12">
+                    <div class="relative">
+                        <div class="bg-black rounded-3xl overflow-hidden shadow-xl">
+                            <img src="https://placehold.co/600x400/111111/CCCCCC.png?text=Food+Bowls" alt="Food Recommendation" class="w-full h-auto">
+                            
+                            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-4 text-white">
+                                <h3 class="font-semibold text-xl">Temper Japang</h3>
+                                <div class="flex items-center justify-between mt-2">
+                                    <div class="star-rating">
+                                        ★★★★★
+                                    </div>
+                                    <button class="bg-sushi-green-500 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-sushi-green-600 transition-colors">
+                                        Order now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-10 px-4">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-6 md:mb-0">
+                    <img src="https://placehold.co/40x40/54c154/FFFFFF.png?text=S" alt="SuShi Logo" class="w-10 h-10 rounded-full">
+                    <span class="font-semibold ml-2 text-xl">Su <span class="bg-sushi-green-600 text-white px-1 rounded-md">Shi</span></span>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-600 hover:text-sushi-green-600 transition-colors">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-sushi-green-600 transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-sushi-green-600 transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-sushi-green-600 transition-colors">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+                
+                <p class="text-gray-600 mt-6 md:mt-0">© 2023 SuShi. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+        
+        // Scroll Animation for Phone Mockups
+        window.addEventListener('scroll', () => {
+            const phoneMockups = document.querySelectorAll('.phone-mockup');
+            
+            phoneMockups.forEach(mockup => {
+                const scrollPosition = window.scrollY;
+                
+                // Apply subtle parallax effect
+                if (scrollPosition < 800) {
+                    const yOffset = scrollPosition * 0.05;
+                    mockup.style.transform = `translateY(${yOffset}px) ${mockup.classList.contains('rotate-6') ? 'rotate(6deg)' : 'rotate(-6deg)'}`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
